@@ -1,0 +1,35 @@
+[{
+  "id": 1008584346745,
+  "employerName": "",
+  "employerRating": "",
+  "jobTitle": "",
+  "jobLocation": "City, ST",
+  "url": "",
+  "jobDetails": "this is the string we are going to try and parse.  JavaScript JavaScript c#",
+  "companyDetails": {
+    "logo": null,
+    "name": "The Storage Manager",
+    "ceoName": null,
+    "headquarters": null,
+    "industry": null,
+    "sector": null,
+    "companyRating": null,
+    "careerOpportunitiesRating": null,
+    "compensationAndBenefitsRating": null,
+    "cultureAndValuesRating": null,
+    "workLifeBalanceRating": null,
+    "revenue": null,
+    "size": null,
+    "type": null,
+    "website": null,
+    "yearFounded": null
+  },
+  "salary": {
+    "min": 37440,
+    "max": 37440,
+    "payPeriod": "HOURLY",
+    "currency": "USD",
+    "source": "EMPLOYER_PROVIDED"
+  },
+  "datePosted": "2023-04-12T00:00:00.000Z"
+}]

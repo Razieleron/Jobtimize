@@ -1,0 +1,5 @@
+4/28/2023
+  8a-12p
+    researched ways to scrape data from job websites.  found out that all the apis that were previously available to individual people were deprecated in late 2010s.  Decided to go with Scraping - found a few web scrapers that I am researching further.
+
+    also did some research on NLP libraries.  I'm not sure this is the appropriate route to take, so I will continue to do research to figure out what is best to do.
