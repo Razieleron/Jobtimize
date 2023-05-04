@@ -5,3 +5,5 @@ appsettings.json
 .vscode
 ScrapedData
 CreatedFiles
+.env
+EnvironmentalVariables.cs
