@@ -106,7 +106,7 @@ class Program
 
                 var requestBodyDict = new Dictionary<string, object>()
                 {
-                    {"prompt", prompt},
+                    {"prompt", prompt}, 
                     {"max_tokens", 50 },
                     {"model", modelName },
                     {"temperature", 0.5},
