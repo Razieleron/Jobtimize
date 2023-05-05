@@ -48,7 +48,7 @@ class Program
         string apiKey = EnvironmentalVariables.ApiKey;
 
 
-        
+
         string modelName = "text-davinci-003";
 
 
@@ -106,15 +106,6 @@ class Program
 
                 var requestBodyDict = new Dictionary<string, object>()
                 {
-                    // { "messages", new List<object>()
-                    //     {
-                    //         new Dictionary<string, string>()
-                    //     {
-                    //         { "role", role },
-                    //         { "content", prompt }
-                    //     }
-                    //     }
-                    // },
                     {"prompt", prompt},
                     {"max_tokens", 50 },
                     {"model", modelName },
