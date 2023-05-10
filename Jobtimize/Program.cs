@@ -43,13 +43,11 @@ class Program
         //this is the api thingy
         HttpClient httpClient = new HttpClient();
         string apiUrl = "https://api.openai.com/v1/completions";
-
         //this is the secret to using functions and stuff from other files:
         string apiKey = EnvironmentalVariables.ApiKey;
-
-
-
         string modelName = "text-davinci-003";
+
+
 
 
         string filePath = "ScrapedData/ExistingSkills.csv";
@@ -82,27 +80,30 @@ class Program
         {
             int numberOfSkills = 0;
             foreach (string skill in existingSkills)
-                if (item.Job_description.Contains(skill, StringComparison.OrdinalIgnoreCase))
+                if (item.Job_description.Contains(skill, StringComparison.OrdinalIgnoreCase) && item.Job_description.Contains("entry", StringComparison.OrdinalIgnoreCase))
                 {
                     numberOfSkills += 1;
                 }
-                if (numberOfSkills >=5 && item.Seniority_level.Contains("entry level", StringComparison.OrdinalIgnoreCase))
+                if (numberOfSkills >=5)
                 {
                 string folderPath = ($"CreatedFiles/{item.Company} - {item.Location} - {item.Job_title}");
                 string modifiedJson = JsonConvert.SerializeObject(jobItems, Formatting.Indented);
-                string fileName = ($"{item.Company} - {item.Location} - {item.Job_title}");  
-                string fileNameGPTResponse = ($"GPT RESPONSE for {item.Company} - {item.Location} - {item.Job_title}");
+
+
+                string fileName = ($"Resume - {item.Company} - {item.Location} - {item.Job_title}");  
                 string outputPath = Path.Combine(folderPath, fileName + ".docx");
-                string gptOutputPath = Path.Combine(folderPath, fileNameGPTResponse + "docx");
                 var document = DocX.Create(outputPath);  
+                
+                string fileNameGPTResponse = ($"Cover Letter - {item.Company} - {item.Location} - {item.Job_title}");
+                string gptOutputPath = Path.Combine(folderPath, fileNameGPTResponse + ".docx");
                 var documentGPTResponse = DocX.Create(gptOutputPath);
 
 
 
 
 
-                string prompt = $"write me a cover letter for the following job description: {item.Job_description}.  Only return to me the text for the cover letter";
-                // string responseContent = await response.Content.ReadAsStringAsync();
+                string prompt = $"write me a cover letter for the following job description as though you were a recent coding bootcamp graduate.  Do not claim that I have more than 1 year of experience.  Assume you have the following list of skills when you write the cover letter and only include the ones most applicable to the job description:  HTML, CSS, JavaScript, SQL, C#, .NET, MVC, React, Razor, Razor Framework, EF Core, Entity Framework Core, Git, Github, Node.js, Object Oriented Programming, Test-Driven Development, Asynchrony, calling APIs, creating APIs, Authentication with Identity, Authorization, Canvas Methods in JavaScript, Redux, NoSQL, Functional Programming, Bootstrap, Markdown, ES6, ECMAscript.  Be sure to only include skills that are contained within the job description, and do not claim to have any skills that aren't listed above.  Here is the job description: {item.Job_description}.  Only return to me the text for the cover letter";
+
 
                 var requestBodyDict = new Dictionary<string, object>()
                 {
@@ -152,6 +153,8 @@ class Program
                     item.Company + " " + 
                     item.Location + " " + 
                     item.Job_title + " " + 
+                    item.Company_link + " " +
+                    item.Job_link + " " +
                     item.Job_description);
                 document.Save();  
 
@@ -170,7 +173,7 @@ class Program
                 }
                 Console.WriteLine(item.Seniority_level);
                 
-                Thread.Sleep(1000);
+                Thread.Sleep(3000);
                 Console.WriteLine(); 
                 // Add an empty line for better readability
             }
