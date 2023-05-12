@@ -6,7 +6,7 @@ namespace Jobtimize.Models
 
   class JobItemParameters
   {
-    public static string JsonFilePath = "modified_PortlandData.json";
+    public static string JsonFilePath = "./../Jobtimize/ScrapedData/modified_PortlandData.json";
     public static List<JobItem> JobItems = 
               JsonConvert.
               DeserializeObject<List<JobItem>>
