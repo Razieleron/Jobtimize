@@ -12,15 +12,20 @@ namespace Jobtimize
         {
         GithubProject PigDice = new GithubProject("Pig Dice", "https://github.com/Razieleron/pig-dice", "Two Player Dice Game", "JavaScript, HTML, CSS");
         GithubProject Dilpr = new GithubProject("Dilpr", "https://github.com/Razieleron/Dilpr", "Social media app for dogs", "C#, Razor Markup, SQL");
+        GithubProject Name = new GithubProject("Name", "url", "description", "languages/technologies");
+        GithubProject Name2 = new GithubProject("Name", "url", "description", "languages/technologies");
+        GithubProject Name3 = new GithubProject("Name", "url", "description", "languages/technologies");
+        GithubProject Name4 = new GithubProject("Name", "url", "description", "languages/technologies");
+        GithubProject Name5 = new GithubProject("Name", "url", "description", "languages/technologies");
 
 
-        HttpClient httpClient = new HttpClient();
-        string initialPrompt = (string)ApiInformation.RequestBodyDict["prompt"];
+        
+        string initialPrompt = (string)ApiInformation.CoverLetterRequestBodyDict["prompt"];
 
         foreach (JobItem item in JobItemParameters.JobItems)
         {     
             int numberOfSkills = 0;
-            ApiInformation.RequestBodyDict["prompt"] = initialPrompt;
+            ApiInformation.CoverLetterRequestBodyDict["prompt"] = initialPrompt;
 
             foreach (string skill in ExistingSkills.List)
 
@@ -30,41 +35,28 @@ namespace Jobtimize
                 }
                 if (numberOfSkills >=5)
                 {
-                    
-                    ApiInformation.RequestBodyDict["prompt"] = ApiInformation.RequestBodyDict["prompt"] += $"{item.Job_description}";
-                    HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, ApiInformation.ApiUrl);
-                    request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiInformation.ApiKey);
-                    request.Content = new StringContent(JsonConvert.SerializeObject(ApiInformation.RequestBodyDict),System.Text.Encoding.UTF8, "application/json");
-                    HttpResponseMessage response = await httpClient.SendAsync(request);
-                    var responseContent = await response.Content.ReadAsStringAsync();
-                    string responseText = JsonConvert.DeserializeObject<ChatGptResponse>(responseContent).choices[0].text;
+                    HttpClient httpClient = new HttpClient();
+
+                    //concats the job description to the end of the predefined cover letter prompt
+                    ApiInformation.CoverLetterRequestBodyDict["prompt"] = ApiInformation.CoverLetterRequestBodyDict["prompt"] += $"{item.Job_description}";
+                    //this is the variable that contains the text from the chatGptAPI Call
+                    string coverLetterResponseText = await GetGptResponseAsync(httpClient, ApiInformation.CoverLetterRequestBodyDict);
 
 
-                    // Console.WriteLine($"Cover Letter Content - {responseContent}");
 
                     string inputFilePath = "./../Jobtimize/ScrapedData/templatedResume.docx";
-                    string proj1Table = "Proj1Table";
+                    string proj1Table = "Proj1Name";
+                    // string proj1Url = "Proj1Url";
+                    // string proj1Description = "Proj1Description";
+                    // string proj1Languages = "Proj1Languages";
 
                     string resumeFilePath = AssembleFolderPathString(item) + "\\" + CreateResumeName(item) + ".docx";
                     string coverLetterFilePath = AssembleFolderPathString(item) + "\\" + CreateCoverLetterName(item) + ".docx";
 
                     CreateDirectory(AssembleFolderPathString(item));
                     DuplicateDocumentAndThenReplaceTextInWordDocument(inputFilePath, resumeFilePath, proj1Table, PigDice.ProjectTitle);
-                    CreateWordDocument(coverLetterFilePath, responseText);
+                    CreateWordDocument(coverLetterFilePath, coverLetterResponseText);
                     WriteJobInformationToTheConsole(item);
-
-
-                    List<string> wordsToFind = ExistingSkills.List;
-
-                    Dictionary<string, int> wordCounts = CountWordOccurrences(item.Job_description, wordsToFind);
-
-                    var filteredWordCounts = wordCounts.Where(entry => entry.Value >= 1);
-
-                    foreach (var fish in filteredWordCounts)
-                    {
-                        Console.WriteLine($"Word: {fish.Key} - Count: {fish.Value}");
-                    }
-
 
                     Thread.Sleep(3000);
                     Console.WriteLine(); 
@@ -72,29 +64,6 @@ namespace Jobtimize
                 }
                 
             }
-        }
-
-
-        static Dictionary<string, int> CountWordOccurrences(string inputText, List<string> wordsToFind)
-        {
-            string[] words = inputText.ToLower().Split(new[] { ' ', ',', '.', ';', ':', '?', '!' }, StringSplitOptions.RemoveEmptyEntries);
-
-            Dictionary<string, int> wordCounts = new Dictionary<string, int>(StringComparer.OrdinalIgnoreCase);
-
-            foreach (string wordToFind in wordsToFind)
-            {
-                int count = 0;
-                foreach (string word in words)
-                {
-                    if (word.Equals(wordToFind, StringComparison.OrdinalIgnoreCase))
-                    {
-                        count++;
-                    }
-                }
-                wordCounts[wordToFind] = count;
-            }
-
-            return wordCounts;
         }
 
     private static string AssembleFolderPathString(JobItem item)
@@ -178,7 +147,22 @@ namespace Jobtimize
         }
     }
 
+    private static async Task<string> GetGptResponseAsync(HttpClient httpClient, Dictionary<string, object> requestBodyDict)
+    {
+        HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, ApiInformation.ApiUrl);
+        request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiInformation.ApiKey);
+        request.Content = new StringContent(JsonConvert.SerializeObject(requestBodyDict), System.Text.Encoding.UTF8, "application/json");
 
+        HttpResponseMessage response = await httpClient.SendAsync(request);
+        var responseContent = await response.Content.ReadAsStringAsync();
+        string responseText = JsonConvert.DeserializeObject<ChatGptResponse>(responseContent).choices[0].text;
+
+        return responseText;
+    }
+
+
+
+    
     
     
     }

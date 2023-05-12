@@ -13,3 +13,5 @@ namespace Jobtimize.Models
         // public double? finish_reason { get; set; }
     }
 }
+
+
