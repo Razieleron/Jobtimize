@@ -2,7 +2,6 @@ using System.Collections.Generic;
 
 namespace Jobtimize.Models
 {
-
     public class ExistingSkills
     {
         public string filePath = "ScrapedData/ExistingSkills.csv";

@@ -4,7 +4,6 @@ using Jobtimize.Models;
 
 namespace Jobtimize.Models
 {
-
     public class ApiInformation
     {
         public static string ApiUrl = "https://api.openai.com/v1/completions";
@@ -13,7 +12,7 @@ namespace Jobtimize.Models
         public static string ModelName = "text-davinci-003";
 
         public static Dictionary<string, object> RequestBodyDict = new Dictionary<string, object>  
-                            {
+                    {
                         {"prompt", IncompletePrompt}, 
                         {"max_tokens", 50 },
                         {"model", ModelName },
@@ -23,8 +22,5 @@ namespace Jobtimize.Models
                         {"presence_penalty", 0},
                         {"stop", null}
                     };
-
     }
-
-
 }

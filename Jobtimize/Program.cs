@@ -68,7 +68,7 @@ namespace Jobtimize
 
                     Thread.Sleep(3000);
                     Console.WriteLine(); 
-                    // Add an empty line for better readability
+                    // Add an empty line for better readability 
                 }
                 
             }
