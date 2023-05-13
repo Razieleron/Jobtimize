@@ -146,7 +146,7 @@ namespace Jobtimize
                     string githubProjectOrderResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.GithubProjectRequestBodyDict);
                     Console.WriteLine("githubProjectOrderResponseText = " + githubProjectOrderResponseText);
 
-
+ 
 
 
 
