@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using System.Linq;
 
 
 namespace Jobtimize
@@ -14,92 +15,110 @@ namespace Jobtimize
     class Program 
         {public static List<GithubProject> githubProjects = new List<GithubProject>
         {
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 1,
                 ProjectTitle = "Pig Dice", 
                 ProjectUrl = "https://github.com/Razieleron/pig-dice", 
                 ProjectDescription = "Two Player Dice Game", 
                 ProjectLanguages = "JavaScript, HTML, CSS"},
             new GithubProject { 
+                ProjectKey = 2,
                 ProjectTitle = "Programming Quiz", 
                 ProjectUrl = "https://github.com/Razieleron/week-2-coding-review", 
                 ProjectDescription = "This is a simple choice tree exercise using the medium of a 'Quiz'. Asking the user for inputs will return a value that, depending on the choices made, will return the 'best' programming language for that user to learn.", 
                 ProjectLanguages = "Event Handlers/Listeners, Event Objects, Function Expressions, Accessing HTML Element Attributes and Properties in the DOM, Forms, Branching, and Locally/Functionally Scoped Variables"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 3, 
                 ProjectTitle = "Mister Roboger's Neighborhood", 
                 ProjectUrl = "https://github.com/Razieleron/week-3-coding-review", 
                 ProjectDescription = "An exercise in arrays, branching, and loops in string manipulation.", 
                 ProjectLanguages = "JavaScript, HTML, CSS, Test Driven Development"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 4, 
                 ProjectTitle = "Super Galactic Age Calculator", 
                 ProjectUrl = "https://github.com/Razieleron/super-galactic-age-calculator", 
                 ProjectDescription = "This Application Calculates your age in various solar years - (Earth, Mercury, Venus, Mars, Jupiter).", 
                 ProjectLanguages = "JavaScript, HTML, CSS"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 5, 
                 ProjectTitle = "Gif Machine", 
                 ProjectUrl = "https://github.com/Razieleron/gif-machine", 
                 ProjectDescription = "A website that makes Api calls to an endpoint based on a user's input and then updates the dom with the returned image.", 
                 ProjectLanguages = "JavaScript, HTML, CSS, Babel, Eslint"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 6, 
                 ProjectTitle = "The Event Handlers", 
                 ProjectUrl = "https://github.com/Razieleron/the-event-handlers", 
                 ProjectDescription = "Utilized JavaScript to Create a Side-Scrolling Shoot-em-up through calling methods on the canvas.  Sourced  all assets from free sources and built the game with Plain HTML/CSS.", 
                 ProjectLanguages = "JavaScript, HTML, CSS, Markdown, Node.js, Canvas Methods"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 7, 
                 ProjectTitle = "Currency Exchange", 
                 ProjectUrl = "https://github.com/Razieleron/currency-exchange", 
                 ProjectDescription = "An application that converts UDS to other currencies by making an API call in a javascript environment.", 
                 ProjectLanguages = "JavaScript, HTML, CSS"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 8, 
                 ProjectTitle = "MadLib in C#", 
                 ProjectUrl = "https://github.com/Razieleron/MadLib-C-Sharp", 
                 ProjectDescription = "A multi page madlib site programmed in C# using the .Net6.0 framework and Model View Controllers and AspNetCore.", 
                 ProjectLanguages = "C#, CSHTML, .Net, MVC, AspNetCore"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 9, 
                 ProjectTitle = "Vendor and Order Tracker", 
                 ProjectUrl = "https://github.com/Razieleron/Vendor-and-Order-Tracker", 
                 ProjectDescription = "A web application that allows a user to create vendors and the orders that those vendors place.", 
                 ProjectLanguages = "C#, HTML, CSS, TDD, .Net, MVC, AspNetCore"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 10, 
                 ProjectTitle = "Eau Claire's Salon", 
                 ProjectUrl = "https://github.com/Razieleron/Eau-Claire-s-Salon", 
                 ProjectDescription = "A Personnel and Client Management Web Application with a persistent database in C#, using EF core and SQL", 
                 ProjectLanguages = "C#, HTML, EF Core, .Net, SQL, AspNetCore, MVC"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 11, 
                 ProjectTitle = "Pierre's Sweet and Savory Treats", 
                 ProjectUrl = "https://github.com/Razieleron/PierresSweetAndSavoryTreats", 
                 ProjectDescription = "An application with user authentication and a many-to-many database relationship written in C#, using EF Core and mySQL", 
                 ProjectLanguages = "C#, Entity Framework, SQL, AspNetCore MVC, HTML, CSS"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 12, 
                 ProjectTitle = "Dr Sillystrings' Factory", 
                 ProjectUrl = "https://github.com/Razieleron/Dr.-Sillystringz-s-Factory", 
                 ProjectDescription = "This is a Many-to-Many relationship management Web Application that allows user to create Engineers and Machines and also give Engineers license to work on certain machines ", 
                 ProjectLanguages = "C#, Entity Framework, SQL, AspNetCore MVC, HTML, CSS"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 13, 
                 ProjectTitle = "Animal Shelter API", 
                 ProjectUrl = "https://github.com/Razieleron/AnimalShelterApi", 
                 ProjectDescription = "A functional API connected to an EF core database.  Has versioning functionality and authentication tokens required for access to the api.", 
                 ProjectLanguages = "C#, .Net, EF Core, SQL, Postman,  "},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 14, 
                 ProjectTitle = "DiLPr", 
                 ProjectUrl = "https://github.com/Razieleron/DiLPr.Solution", 
                 ProjectDescription = "A MVC app for Dogs I'd Like To Pet.  A tinder-style application with authentication, registration and login, multiple profile image uploading and storage, a swiping feature populated with existing profiles and a shared interests functionality as well", 
                 ProjectLanguages = "EF core, CSS, SQL, MVC, .Net, C#, HTML"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 15, 
                 ProjectTitle = "Word Guess Time!", 
                 ProjectUrl = "https://github.com/Razieleron/react-word-game", 
                 ProjectDescription = "A multiplayer hangman style guessing game that utilizes an api to call random words.", 
                 ProjectLanguages = "React, JavaScript, HTML, CSS, "},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 16, 
                 ProjectTitle = "RecipeBox", 
                 ProjectUrl = "https://github.com/Razieleron/RecipeBox", 
                 ProjectDescription = "A thoroughly styled and built out application to track recipes and their components for a fictional hobby website.", 
                 ProjectLanguages = "C#, .Net, AspNetCore MVC, SQL, HTML, CSS"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 17, 
                 ProjectTitle = "The Coffee Cafe", 
                 ProjectUrl = "https://github.com/Razieleron/ReactInventoryTracker", 
                 ProjectDescription = "A React based inventory management system with add item name/details/quantity functionality, view item details functionality, and increment/decrement inventory functionality.", 
                 ProjectLanguages = "React, JSX, Node.js, JavaScript, HTML, CSS"},
-            new GithubProject { 
+            new GithubProject {
+                ProjectKey = 18, 
                 ProjectTitle = "Jobtimize", 
                 ProjectUrl = "https://github.com/Razieleron/Jobtimize", 
                 ProjectDescription = "Resume and Cover letter automation program that takes scraped data and makes multiple api calls to chatGPT with engineered prompts to appropriately populate both the cover letter and resume", 
@@ -111,6 +130,7 @@ namespace Jobtimize
         string initialCoverLetterPrompt = (string)ApiInformation.CoverLetterRequestBodyDict["prompt"];
         string initialJobDescriptionDistillationPrompt = (string)ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"];
         string initialGithubProjectOrderPrompt = (string)ApiInformation.GithubProjectRequestBodyDict["prompt"];
+        string serializedGithubProjects = JsonConvert.SerializeObject(githubProjects);
 
         foreach (JobItem item in JobItemParameters.JobItems)
         {     
@@ -125,7 +145,7 @@ namespace Jobtimize
                 {
                     numberOfSkills += 1;
                 }
-                if (numberOfSkills >=5)
+                if (numberOfSkills >=7 && item.Seniority_level.Contains("Entry", StringComparison.OrdinalIgnoreCase))
                 {
                     HttpClient httpClient = new HttpClient();
                     
@@ -139,14 +159,24 @@ namespace Jobtimize
                             @"
                     
                             Please create a one-page cover letter focusing on the most relevant skills and talents from the list that match the requirements of the job description.";
-                        
+
+
+                        //this appends the github project prompt with the job description and the list of github objects
+                    ApiInformation.GithubProjectRequestBodyDict["prompt"] = $"Based on the following job description:  {item.Job_description}" + @$"
+                    
+                    
+                    order this list of github projects in order from most relevant to the posting to the least relevant to the posting, referring to each item only by it's 'ProjectKey' field.  As an example, your return should look like this '1, 3, 15, 4, 6' with 1 being the most relevant and 6 the least relevant.  Be sure to balance choosing projects that show the ability to accomplish the needs of the job with choosing complex projects that demonstrate overall competence and acumen.  Here is the list of github Projects:  
+                    
+                    {serializedGithubProjects}";
+
+
                         //this is the variable that contains the text from the chatGptAPI Call
                     string coverLetterResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.CoverLetterRequestBodyDict);
 
                     string githubProjectOrderResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.GithubProjectRequestBodyDict);
                     Console.WriteLine("githubProjectOrderResponseText = " + githubProjectOrderResponseText);
 
- 
+
 
 
 
