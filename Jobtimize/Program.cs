@@ -73,26 +73,40 @@ namespace Jobtimize
                 ProjectTitle = "Dr Sillystrings' Factory", 
                 ProjectUrl = "https://github.com/Razieleron/Dr.-Sillystringz-s-Factory", 
                 ProjectDescription = "This is a Many-to-Many relationship management Web Application that allows user to create Engineers and Machines and also give Engineers license to work on certain machines ", 
-                ProjectLanguages = "JavaScript, HTML, CSS"}
-            // new GithubProject { 
-            //     ProjectTitle = "Pig Dice", 
-            //     ProjectUrl = "https://github.com/Razieleron/pig-dice", 
-            //     ProjectDescription = "Two Player Dice Game", 
-            //     ProjectLanguages = "JavaScript, HTML, CSS"}
+                ProjectLanguages = "C#, Entity Framework, SQL, AspNetCore MVC, HTML, CSS"},
+            new GithubProject { 
+                ProjectTitle = "Animal Shelter API", 
+                ProjectUrl = "https://github.com/Razieleron/AnimalShelterApi", 
+                ProjectDescription = "A functional API connected to an EF core database.  Has versioning functionality and authentication tokens required for access to the api.", 
+                ProjectLanguages = "C#, .Net, EF Core, SQL, Postman,  "},
+            new GithubProject { 
+                ProjectTitle = "DiLPr", 
+                ProjectUrl = "https://github.com/Razieleron/DiLPr.Solution", 
+                ProjectDescription = "A MVC app for Dogs I'd Like To Pet.  A tinder-style application with authentication, registration and login, multiple profile image uploading and storage, a swiping feature populated with existing profiles and a shared interests functionality as well", 
+                ProjectLanguages = "EF core, CSS, SQL, MVC, .Net, C#, HTML"},
+            new GithubProject { 
+                ProjectTitle = "Word Guess Time!", 
+                ProjectUrl = "https://github.com/Razieleron/react-word-game", 
+                ProjectDescription = "A multiplayer hangman style guessing game that utilizes an api to call random words.", 
+                ProjectLanguages = "React, JavaScript, HTML, CSS, "},
+            new GithubProject { 
+                ProjectTitle = "RecipeBox", 
+                ProjectUrl = "https://github.com/Razieleron/RecipeBox", 
+                ProjectDescription = "A thoroughly styled and built out application to track recipes and their components for a fictional hobby website.", 
+                ProjectLanguages = "C#, .Net, AspNetCore MVC, SQL, HTML, CSS"},
+            new GithubProject { 
+                ProjectTitle = "The Coffee Cafe", 
+                ProjectUrl = "https://github.com/Razieleron/ReactInventoryTracker", 
+                ProjectDescription = "A React based inventory management system with add item name/details/quantity functionality, view item details functionality, and increment/decrement inventory functionality.", 
+                ProjectLanguages = "React, JSX, Node.js, JavaScript, HTML, CSS"},
+            new GithubProject { 
+                ProjectTitle = "Jobtimize", 
+                ProjectUrl = "https://github.com/Razieleron/Jobtimize", 
+                ProjectDescription = "Resume and Cover letter automation program that takes scraped data and makes multiple api calls to chatGPT with engineered prompts to appropriately populate both the cover letter and resume", 
+                ProjectLanguages = "ChatGPT, APIs, C#, Packages: OpenXML, Newtonsoft.Json, CsvHelper"}
         };
         static async Task Main(string[] args)
         {
-
-        
-        // GithubProject PigDice = new GithubProject("Pig Dice", "https://github.com/Razieleron/pig-dice", "Two Player Dice Game", "JavaScript, HTML, CSS");
-        GithubProject Dilpr = new GithubProject("Dilpr", "https://github.com/Razieleron/Dilpr", "Social media app for dogs", "C#, Razor Markup, SQL");
-        GithubProject Name = new GithubProject("Name", "url", "description", "languages/technologies");
-        GithubProject Name2 = new GithubProject("Name", "url", "description", "languages/technologies");
-        GithubProject Name3 = new GithubProject("Name", "url", "description", "languages/technologies");
-        GithubProject Name4 = new GithubProject("Name", "url", "description", "languages/technologies");
-        GithubProject Name5 = new GithubProject("Name", "url", "description", "languages/technologies");
-
-
         
         string initialCoverLetterPrompt = (string)ApiInformation.CoverLetterRequestBodyDict["prompt"];
         string initialJobDescriptionDistillationPrompt = (string)ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"];
