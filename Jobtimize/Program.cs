@@ -12,12 +12,79 @@ using System.Threading.Tasks;
 namespace Jobtimize
 {
     class Program 
-    {
+        {public static List<GithubProject> githubProjects = new List<GithubProject>
+        {
+            new GithubProject { 
+                ProjectTitle = "Pig Dice", 
+                ProjectUrl = "https://github.com/Razieleron/pig-dice", 
+                ProjectDescription = "Two Player Dice Game", 
+                ProjectLanguages = "JavaScript, HTML, CSS"},
+            new GithubProject { 
+                ProjectTitle = "Programming Quiz", 
+                ProjectUrl = "https://github.com/Razieleron/week-2-coding-review", 
+                ProjectDescription = "This is a simple choice tree exercise using the medium of a 'Quiz'. Asking the user for inputs will return a value that, depending on the choices made, will return the 'best' programming language for that user to learn.", 
+                ProjectLanguages = "Event Handlers/Listeners, Event Objects, Function Expressions, Accessing HTML Element Attributes and Properties in the DOM, Forms, Branching, and Locally/Functionally Scoped Variables"},
+            new GithubProject { 
+                ProjectTitle = "Mister Roboger's Neighborhood", 
+                ProjectUrl = "https://github.com/Razieleron/week-3-coding-review", 
+                ProjectDescription = "An exercise in arrays, branching, and loops in string manipulation.", 
+                ProjectLanguages = "JavaScript, HTML, CSS, Test Driven Development"},
+            new GithubProject { 
+                ProjectTitle = "Super Galactic Age Calculator", 
+                ProjectUrl = "https://github.com/Razieleron/super-galactic-age-calculator", 
+                ProjectDescription = "This Application Calculates your age in various solar years - (Earth, Mercury, Venus, Mars, Jupiter).", 
+                ProjectLanguages = "JavaScript, HTML, CSS"},
+            new GithubProject { 
+                ProjectTitle = "Gif Machine", 
+                ProjectUrl = "https://github.com/Razieleron/gif-machine", 
+                ProjectDescription = "A website that makes Api calls to an endpoint based on a user's input and then updates the dom with the returned image.", 
+                ProjectLanguages = "JavaScript, HTML, CSS, Babel, Eslint"},
+            new GithubProject { 
+                ProjectTitle = "The Event Handlers", 
+                ProjectUrl = "https://github.com/Razieleron/the-event-handlers", 
+                ProjectDescription = "Utilized JavaScript to Create a Side-Scrolling Shoot-em-up through calling methods on the canvas.  Sourced  all assets from free sources and built the game with Plain HTML/CSS.", 
+                ProjectLanguages = "JavaScript, HTML, CSS, Markdown, Node.js, Canvas Methods"},
+            new GithubProject { 
+                ProjectTitle = "Currency Exchange", 
+                ProjectUrl = "https://github.com/Razieleron/currency-exchange", 
+                ProjectDescription = "An application that converts UDS to other currencies by making an API call in a javascript environment.", 
+                ProjectLanguages = "JavaScript, HTML, CSS"},
+            new GithubProject { 
+                ProjectTitle = "MadLib in C#", 
+                ProjectUrl = "https://github.com/Razieleron/MadLib-C-Sharp", 
+                ProjectDescription = "A multi page madlib site programmed in C# using the .Net6.0 framework and Model View Controllers and AspNetCore.", 
+                ProjectLanguages = "C#, CSHTML, .Net, MVC, AspNetCore"},
+            new GithubProject { 
+                ProjectTitle = "Vendor and Order Tracker", 
+                ProjectUrl = "https://github.com/Razieleron/Vendor-and-Order-Tracker", 
+                ProjectDescription = "A web application that allows a user to create vendors and the orders that those vendors place.", 
+                ProjectLanguages = "C#, HTML, CSS, TDD, .Net, MVC, AspNetCore"},
+            new GithubProject { 
+                ProjectTitle = "Eau Claire's Salon", 
+                ProjectUrl = "https://github.com/Razieleron/Eau-Claire-s-Salon", 
+                ProjectDescription = "A Personnel and Client Management Web Application with a persistent database in C#, using EF core and SQL", 
+                ProjectLanguages = "C#, HTML, EF Core, .Net, SQL, AspNetCore, MVC"},
+            new GithubProject { 
+                ProjectTitle = "Pierre's Sweet and Savory Treats", 
+                ProjectUrl = "https://github.com/Razieleron/PierresSweetAndSavoryTreats", 
+                ProjectDescription = "An application with user authentication and a many-to-many database relationship written in C#, using EF Core and mySQL", 
+                ProjectLanguages = "C#, Entity Framework, SQL, AspNetCore MVC, HTML, CSS"},
+            new GithubProject { 
+                ProjectTitle = "Dr Sillystrings' Factory", 
+                ProjectUrl = "https://github.com/Razieleron/Dr.-Sillystringz-s-Factory", 
+                ProjectDescription = "This is a Many-to-Many relationship management Web Application that allows user to create Engineers and Machines and also give Engineers license to work on certain machines ", 
+                ProjectLanguages = "JavaScript, HTML, CSS"}
+            // new GithubProject { 
+            //     ProjectTitle = "Pig Dice", 
+            //     ProjectUrl = "https://github.com/Razieleron/pig-dice", 
+            //     ProjectDescription = "Two Player Dice Game", 
+            //     ProjectLanguages = "JavaScript, HTML, CSS"}
+        };
         static async Task Main(string[] args)
         {
 
         
-        GithubProject PigDice = new GithubProject("Pig Dice", "https://github.com/Razieleron/pig-dice", "Two Player Dice Game", "JavaScript, HTML, CSS");
+        // GithubProject PigDice = new GithubProject("Pig Dice", "https://github.com/Razieleron/pig-dice", "Two Player Dice Game", "JavaScript, HTML, CSS");
         GithubProject Dilpr = new GithubProject("Dilpr", "https://github.com/Razieleron/Dilpr", "Social media app for dogs", "C#, Razor Markup, SQL");
         GithubProject Name = new GithubProject("Name", "url", "description", "languages/technologies");
         GithubProject Name2 = new GithubProject("Name", "url", "description", "languages/technologies");
@@ -80,11 +147,16 @@ namespace Jobtimize
 
 
 
-
+                    Dictionary<string, string> replacements = new Dictionary<string, string>
+                    {
+                        { "Proj1Name", "John" },
+                        { "Proj1Url", "Doe" },
+                        { "Proj1Description", "john.doe@example.com" },
+                    };
 
 
                     string inputFilePath = "./../Jobtimize/ScrapedData/templatedResume.docx";
-                    string proj1Table = "Proj1Name";
+                    // string proj1Table = "Proj1Name";
                     // string proj1Url = "Proj1Url";
                     // string proj1Description = "Proj1Description";
                     // string proj1Languages = "Proj1Languages";
@@ -93,7 +165,10 @@ namespace Jobtimize
                     string coverLetterFilePath = AssembleFolderPathString(item) + "\\" + CreateCoverLetterName(item) + ".docx";
 
                     CreateDirectory(AssembleFolderPathString(item));
-                    DuplicateDocumentAndThenReplaceTextInWordDocument(inputFilePath, resumeFilePath, proj1Table, PigDice.ProjectTitle);
+
+                    DuplicateDocument(inputFilePath, resumeFilePath);
+                    ReplaceTextInWordDocument(resumeFilePath, replacements);
+
                     CreateWordDocument(coverLetterFilePath, coverLetterResponseText);
                     WriteJobInformationToTheConsole(item);
 
@@ -163,25 +238,33 @@ namespace Jobtimize
         }
         Console.WriteLine(item.Seniority_level);
     }
-    private static void DuplicateDocumentAndThenReplaceTextInWordDocument(string inputFilePath, string outputFilePath, string textToReplace, string newText)
+    public static void DuplicateDocument(string inputFilePath, string outputFilePath)
     {
-        System.IO.File.Copy(inputFilePath, outputFilePath, true);
-        using(WordprocessingDocument doc = WordprocessingDocument.Open(outputFilePath, true))
+        File.Copy(inputFilePath, outputFilePath, true);
+    }
+    public static void ReplaceTextInWordDocument(string filePath, Dictionary<string, string> replacements)
+    {
+        using (WordprocessingDocument doc = WordprocessingDocument.Open(filePath, true))
         {
-            // get the body of the document
             Body body = doc.MainDocumentPart.Document.Body;
 
-            // find all the run elements containing the text to replace
-            var runsWithTextToReplace = body.Descendants<Run>()
-                                            .Where(run => run.InnerText.Contains(textToReplace))
-                                            .ToList();
-            // replace the text in each Run element
-            foreach (var run in runsWithTextToReplace)
+            foreach (var replacement in replacements)
             {
-                string replacedText =   run.InnerText.Replace(textToReplace, newText);
-                                        run.RemoveAllChildren<Text>();
-                                        run.AppendChild(new Text(replacedText));
+                string textToReplace = replacement.Key;
+                string newText = replacement.Value;
+
+                var runsWithTextToReplace = body.Descendants<Run>()
+                    .Where(run => run.InnerText.Contains(textToReplace))
+                    .ToList();
+
+                foreach (var run in runsWithTextToReplace)
+                {
+                    string replacedText = run.InnerText.Replace(textToReplace, newText);
+                    run.RemoveAllChildren<Text>();
+                    run.AppendChild(new Text(replacedText));
+                }
             }
+
             doc.MainDocumentPart.Document.Save();
         }
     }

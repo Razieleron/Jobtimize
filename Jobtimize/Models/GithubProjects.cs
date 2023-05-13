@@ -9,6 +9,7 @@ namespace Jobtimize.Models
         public string ProjectDescription { get; set; }
         public string ProjectLanguages { get; set; }
 
+        public GithubProject(){}
         public GithubProject(string projectTitle, string projectUrl, string projectDescription, string projectLanguages)
         {
             ProjectTitle = projectTitle;
