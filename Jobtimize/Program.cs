@@ -15,6 +15,8 @@ namespace Jobtimize
     {
         static async Task Main(string[] args)
         {
+
+        
         GithubProject PigDice = new GithubProject("Pig Dice", "https://github.com/Razieleron/pig-dice", "Two Player Dice Game", "JavaScript, HTML, CSS");
         GithubProject Dilpr = new GithubProject("Dilpr", "https://github.com/Razieleron/Dilpr", "Social media app for dogs", "C#, Razor Markup, SQL");
         GithubProject Name = new GithubProject("Name", "url", "description", "languages/technologies");
@@ -50,7 +52,12 @@ namespace Jobtimize
                     string distilledJobDescription = await GetGptResponseByDictAsync(httpClient, ApiInformation.JobDescriptionDistillationRequestBodyDict);
                     
                         //this appends the cover letter prompt with the job description from the json file
-                    ApiInformation.CoverLetterRequestBodyDict["prompt"] = ApiInformation.CoverLetterRequestBodyDict["prompt"] += $"{item.Job_description}";
+                    ApiInformation.CoverLetterRequestBodyDict["prompt"] = 
+                            ApiInformation.CoverLetterRequestBodyDict["prompt"] += 
+                            $"{item.Job_description}" + 
+                            @"
+                    
+                            Please create a one-page cover letter focusing on the most relevant skills and talents from the list that match the requirements of the job description.";
                         
                         //this is the variable that contains the text from the chatGptAPI Call
                     string coverLetterResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.CoverLetterRequestBodyDict);
@@ -195,3 +202,4 @@ namespace Jobtimize
     }
 
 }
+
