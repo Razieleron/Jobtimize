@@ -8,14 +8,27 @@ namespace Jobtimize.Models
     {
         public static string ApiUrl = "https://api.openai.com/v1/completions";
         public static string ApiKey = EnvironmentalVariables.ApiKey;
-        public static string CoverLetterPrompt = $"write me a cover letter for the following job description as though you were a recent coding bootcamp graduate.  Do not claim that I have more than 1 year of experience.  Assume you haveChoose from the following list of skills when you write the cover letter and only include the ones most applicable to the job description:  HTML, CSS, JavaScript, SQL, C#, .NET, MVC, React, Razor, Razor Framework, EF Core, Entity Framework Core, Git, Github, Node.js, Object Oriented Programming, Test-Driven Development, Asynchrony, calling APIs, creating APIs, Authentication with Identity, Authorization, Canvas Methods in JavaScript, Redux, NoSQL, Functional Programming, Bootstrap, Markdown, ES6, ECMAscript.  Be sure to only include skills that are contained within the job description, and do not claim to have any skills that aren't listed above. Only return to me the text for the cover letter.  Here is the job description: ";
-        public static string GithubProjectOrderPrompt = $"write me a cover letter for the following job description as though you were a recent coding bootcamp graduate.  Do not claim that I have more than 1 year of experience.  Assume you haveChoose from the following list of skills when you write the cover letter and only include the ones most applicable to the job description:  HTML, CSS, JavaScript, SQL, C#, .NET, MVC, React, Razor, Razor Framework, EF Core, Entity Framework Core, Git, Github, Node.js, Object Oriented Programming, Test-Driven Development, Asynchrony, calling APIs, creating APIs, Authentication with Identity, Authorization, Canvas Methods in JavaScript, Redux, NoSQL, Functional Programming, Bootstrap, Markdown, ES6, ECMAscript.  Be sure to only include skills that are contained within the job description, and do not claim to have any skills that aren't listed above. Only return to me the text for the cover letter.  Here is the job description: ";
+        public static string CoverLetterPrompt = $"write me a one page cover letter for the following job description as though you were a recent coding bootcamp graduate.  Do not claim that I have more than 1 year of experience.  Assume you haveChoose from the following list of skills when you write the cover letter and only include the ones most applicable to the job description:  HTML, CSS, JavaScript, SQL, C#, .NET, MVC, React, Razor, Razor Framework, EF Core, Entity Framework Core, Git, Github, Node.js, Object Oriented Programming, Test-Driven Development, Asynchrony, calling APIs, creating APIs, Authentication with Identity, Authorization, Canvas Methods in JavaScript, Redux, NoSQL, Functional Programming, Bootstrap, Markdown, ES6, ECMAscript.  Be sure to only include skills that are contained within the job description, and do not claim to have any skills that aren't listed above. Only return to me the text for the cover letter.  Here is the job description: ";
+        public static string GithubProjectOrderPrompt = $"Here is a list of my GithubProjects - ";
+        public static string JobDescriptionDistillationPrompt = $"Can you summarize this job description for me?  Be sure to include all the technologies and programming languages listed in your summary- ";
         public static string ModelName = "text-davinci-003";
 
         public static Dictionary<string, object> CoverLetterRequestBodyDict = new Dictionary<string, object>  
                     {
                         {"prompt", CoverLetterPrompt}, 
-                        {"max_tokens", 50 },
+                        {"max_tokens", 2000 },
+                        {"model", ModelName },
+                        {"temperature", 0.5},
+                        {"top_p", 1},
+                        {"frequency_penalty", 0},
+                        {"presence_penalty", 0},
+                        {"stop", null}
+                    };
+
+        public static Dictionary<string, object> JobDescriptionDistillationRequestBodyDict = new Dictionary<string, object>  
+                    {
+                        {"prompt", JobDescriptionDistillationPrompt}, 
+                        {"max_tokens", 2000 },
                         {"model", ModelName },
                         {"temperature", 0.5},
                         {"top_p", 1},
@@ -35,30 +48,30 @@ namespace Jobtimize.Models
                         {"presence_penalty", 0},
                         {"stop", null}
                     };
+                    
+                
     }
 }
 
-// private static async Task<string> GetGptResponseAsync(HttpClient httpClient, Dictionary<string, object> requestBodyDict)
-// {
-//     HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, ApiInformation.ApiUrl);
-//     request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiInformation.ApiKey);
-//     request.Content = new StringContent(JsonConvert.SerializeObject(requestBodyDict), System.Text.Encoding.UTF8, "application/json");
 
-//     HttpResponseMessage response = await httpClient.SendAsync(request);
-//     var responseContent = await response.Content.ReadAsStringAsync();
-//     string responseText = JsonConvert.DeserializeObject<ChatGptResponse>(responseContent).choices[0].text;
+public static List<object> MessagesList = new List<object>
+{
+    new Dictionary<string, string> { { "role", "system" }, { "content", "You are a helpful assistant." } },
+    new Dictionary<string, string> { { "role", "user" }, { "content", CoverLetterPrompt } }
+};
 
-//     return responseText;
-// }
-
-// ApiInformation.RequestBodyDict["prompt"] = $"{item.Job_description}";
-// string firstResponse = await GetGptResponseAsync(httpClient, ApiInformation.RequestBodyDict);
-
-// ApiInformation.RequestBodyDict["prompt"] = "Another prompt";
-// string secondResponse = await GetGptResponseAsync(httpClient, ApiInformation.RequestBodyDict);
-
-// // ...and so on for additional prompts
+public static Dictionary<string, object> CoverLetterRequestBodyDict = new Dictionary<string, object>
+{
+    { "messages", MessagesList },
+    { "max_tokens", 2000 },
+    { "model", ModelName },
+    { "temperature", 0.5 },
+    { "top_p", 1 },
+    { "frequency_penalty", 0 },
+    { "presence_penalty", 0 },
+    { "stop", null }
+};
 
 
 
-// // ...and so on for additional prompts
+

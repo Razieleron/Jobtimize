@@ -20,12 +20,16 @@ namespace Jobtimize
 
 
         
-        string initialPrompt = (string)ApiInformation.CoverLetterRequestBodyDict["prompt"];
+        string initialCoverLetterPrompt = (string)ApiInformation.CoverLetterRequestBodyDict["prompt"];
+        string initialJobDescriptionDistillationPrompt = (string)ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"];
+        string initialGithubProjectOrderPrompt = (string)ApiInformation.GithubProjectRequestBodyDict["prompt"];
 
         foreach (JobItem item in JobItemParameters.JobItems)
         {     
             int numberOfSkills = 0;
-            ApiInformation.CoverLetterRequestBodyDict["prompt"] = initialPrompt;
+            ApiInformation.CoverLetterRequestBodyDict["prompt"] = initialCoverLetterPrompt;
+            ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"] = initialJobDescriptionDistillationPrompt;
+            ApiInformation.GithubProjectRequestBodyDict["prompt"] = initialGithubProjectOrderPrompt;
 
             foreach (string skill in ExistingSkills.List)
 
@@ -36,13 +40,18 @@ namespace Jobtimize
                 if (numberOfSkills >=5)
                 {
                     HttpClient httpClient = new HttpClient();
-
-                    //concats the job description to the end of the predefined cover letter prompt
+                        //appends the 
+                    ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"] = ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"] + $"Company: {item.Job_description}   Title: {item.Job_title}    Location: {item.Location}    Job Description: {item.Job_description}";
+                        //distills the job description
+                    string distilledJobDescription = await GetGptResponseByDictAsync(httpClient, ApiInformation.JobDescriptionDistillationRequestBodyDict);
+                    Console.WriteLine("distilledJobDescription = " + distilledJobDescription);
+                        //concats the distilled job description to the end of the predefined cover letter prompt
                     ApiInformation.CoverLetterRequestBodyDict["prompt"] = ApiInformation.CoverLetterRequestBodyDict["prompt"] += $"{item.Job_description}";
-                    //this is the variable that contains the text from the chatGptAPI Call
-                    string coverLetterResponseText = await GetGptResponseAsync(httpClient, ApiInformation.CoverLetterRequestBodyDict);
+                        //this is the variable that contains the text from the chatGptAPI Call
+                    string coverLetterResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.CoverLetterRequestBodyDict);
 
-
+                    string githubProjectOrderResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.GithubProjectRequestBodyDict);
+                    Console.WriteLine("githubProjectOrderResponseText = " + githubProjectOrderResponseText);
 
                     string inputFilePath = "./../Jobtimize/ScrapedData/templatedResume.docx";
                     string proj1Table = "Proj1Name";
@@ -146,8 +155,7 @@ namespace Jobtimize
             doc.MainDocumentPart.Document.Save();
         }
     }
-
-    private static async Task<string> GetGptResponseAsync(HttpClient httpClient, Dictionary<string, object> requestBodyDict)
+    private static async Task<string> GetGptResponseByDictAsync(HttpClient httpClient, Dictionary<string, object> requestBodyDict)
     {
         HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, ApiInformation.ApiUrl);
         request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiInformation.ApiKey);
