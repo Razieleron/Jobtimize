@@ -13,20 +13,15 @@ namespace Jobtimize.Models
     {
         public static string ApiUrl = "https://api.openai.com/v1/completions";
         public static string ApiKey = EnvironmentalVariables.ApiKey;
-        public static string CoverLetterPrompt = $"write me a one page cover letter for the following job description as though you were a recent coding bootcamp graduate.  Do not claim that I have more than 1 year of experience.  Assume you haveChoose from the following list of skills when you write the cover letter and only include the ones most applicable to the job description:  HTML, CSS, JavaScript, SQL, C#, .NET, MVC, React, Razor, Razor Framework, EF Core, Entity Framework Core, Git, Github, Node.js, Object Oriented Programming, Test-Driven Development, Asynchrony, calling APIs, creating APIs, Authentication with Identity, Authorization, Canvas Methods in JavaScript, Redux, NoSQL, Functional Programming, Bootstrap, Markdown, ES6, ECMAscript.  Be sure to only include skills that are contained within the job description, and do not claim to have any skills that aren't listed above. Only return to me the text for the cover letter.  Here is the job description: Kyyba is looking for a React JS Developer with 5+ years of working experience and in-depth knowledge of JavaScript, CSS, HTML, and front-end languages, as well as knowledge of React tools such as Reactjs, Hooks, and Redux. The ideal candidate will have experience with user interface design, performance testing frameworks such as JMeter, Mocha, or Jest, browser-based debugging and performance testing software, excellent troubleshooting skills, and strong communication and documentation skills. Kyyba provides many valuable benefits and a balanced compensation structure combined with career development.";
+        public static string CoverLetterPrompt = $"You an aspiring software developer.  You have diverse experience and have always been fascinated with the process of process optimization and automation.  You have a bachelors degree in social science from portland state university.  You discovered your love for programming when repetitive tasks from your current job were too boring for you to handle.  You started automating those tasks and discovered a love for computer programming.  As a result of that newfound passion, you decided to enroll in Epicodus, an intensive 5 week coding bootcamp where you were going to be learning JavaScript, C# and React.  You gained exposure to a lot of other technologies along the way, such as HTML, CSS, SQL, and .Net.  You also gained experience with MVC, Razor/Razor Framework, EF Core (entity framework core), Git and Github.  In your studies, you gained experience with Node.js, Object oriented programming, and Test driven development.  You were even exposed to calling and creating APIs, Authentication/Authorization, functional programming, and bootstrap.  Write me a one page cover letter for the following job description and only return to me the text for the cover letter. Be sure to not only repeat what I've given you here as a prompt, but take each skill listed and compare it to the job description - for example, if the job description lists front-end development, you can say something like 'I have experience in a variety of front end programming languages and frameworks, such as: etc. etc. etc.'.  If The skill is not listed here in this prompt, DO NOT INCLUDE IT IN THE COVER LETTER. Here is the job description: ";
         public static string GithubProjectOrderPrompt = $"Here is a list of my GithubProjects - ";
         public static string JobDescriptionDistillationPrompt = $"Can you summarize this job description for me?  Be sure to include all the technologies and programming languages listed in your summary- ";
         public static string ModelName = "text-davinci-003";
 
-        public static List<object> MessagesList = new List<object>
-        {
-            new Dictionary<string, string> { { "role", "system" }, { "content", "You are a helpful assistant." } },
-            new Dictionary<string, string> { { "role", "user" }, { "content", CoverLetterPrompt} }
-        };
 
         public static Dictionary<string, object> CoverLetterRequestBodyDict = new Dictionary<string, object>
                     {
-                        { "messages", MessagesList },
+                        { "prompt", CoverLetterPrompt },
                         { "max_tokens", 2000 },
                         { "model", ModelName },
                         { "temperature", 0.5 },
@@ -64,24 +59,6 @@ namespace Jobtimize.Models
     }
 }
 
-
-// public static List<object> MessagesList = new List<object>
-// {
-//     new Dictionary<string, string> { { "role", "system" }, { "content", "You are a helpful assistant." } },
-//     new Dictionary<string, string> { { "role", "user" }, { "content", CoverLetterPrompt } }
-// };
-
-// public static Dictionary<string, object> CoverLetterRequestBodyDict = new Dictionary<string, object>
-// {
-//     { "messages", MessagesList },
-//     { "max_tokens", 2000 },
-//     { "model", ModelName },
-//     { "temperature", 0.5 },
-//     { "top_p", 1 },
-//     { "frequency_penalty", 0 },
-//     { "presence_penalty", 0 },
-//     { "stop", null }
-// };
 
 
 

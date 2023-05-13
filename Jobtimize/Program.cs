@@ -25,14 +25,14 @@ namespace Jobtimize
 
 
         
-        // string initialCoverLetterPrompt = (string)ApiInformation.CoverLetterRequestBodyDict["prompt"];
+        string initialCoverLetterPrompt = (string)ApiInformation.CoverLetterRequestBodyDict["prompt"];
         string initialJobDescriptionDistillationPrompt = (string)ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"];
         string initialGithubProjectOrderPrompt = (string)ApiInformation.GithubProjectRequestBodyDict["prompt"];
 
         foreach (JobItem item in JobItemParameters.JobItems)
         {     
             int numberOfSkills = 0;
-            // ApiInformation.CoverLetterRequestBodyDict["prompt"] = initialCoverLetterPrompt;
+            ApiInformation.CoverLetterRequestBodyDict["prompt"] = initialCoverLetterPrompt;
             ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"] = initialJobDescriptionDistillationPrompt;
             ApiInformation.GithubProjectRequestBodyDict["prompt"] = initialGithubProjectOrderPrompt;
 
@@ -45,17 +45,13 @@ namespace Jobtimize
                 if (numberOfSkills >=5)
                 {
                     HttpClient httpClient = new HttpClient();
-
-                    string gpt4Response = await GetGptResponseAsync(ApiInformation.CoverLetterRequestBodyDict);
-                    Console.WriteLine("gpt4 response = " + gpt4Response);
-
-                        //appends the 
-                    ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"] = ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"] + $"Company: {item.Job_description}   Title: {item.Job_title}    Location: {item.Location}    Job Description: {item.Job_description}";
+                    
                         //distills the job description
                     string distilledJobDescription = await GetGptResponseByDictAsync(httpClient, ApiInformation.JobDescriptionDistillationRequestBodyDict);
-                    Console.WriteLine("distilledJobDescription = " + distilledJobDescription);
-                        //concats the distilled job description to the end of the predefined cover letter prompt
+                    
+                        //this appends the cover letter prompt with the job description from the json file
                     ApiInformation.CoverLetterRequestBodyDict["prompt"] = ApiInformation.CoverLetterRequestBodyDict["prompt"] += $"{item.Job_description}";
+                        
                         //this is the variable that contains the text from the chatGptAPI Call
                     string coverLetterResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.CoverLetterRequestBodyDict);
 
@@ -190,37 +186,9 @@ namespace Jobtimize
 
         HttpResponseMessage response = await httpClient.SendAsync(request);
         var responseContent = await response.Content.ReadAsStringAsync();
-        string responseText = JsonConvert.DeserializeObject<ChatGptResponse>(responseContent).choices[0].message.content;
+        string responseText = JsonConvert.DeserializeObject<ChatGptResponse>(responseContent).choices[0].text;
 
         return responseText;
-    }
-
-    public static async Task<string> GetGptResponseAsync(Dictionary<string, object> requestBodyDict)
-    {
-        using (HttpClient httpClient = new HttpClient())
-        {
-            HttpRequestMessage request = new HttpRequestMessage(HttpMethod.Post, ApiInformation.ApiUrl);
-            request.Headers.Authorization = new System.Net.Http.Headers.AuthenticationHeaderValue("Bearer", ApiInformation.ApiKey);
-            request.Content = new StringContent(JsonConvert.SerializeObject(requestBodyDict), System.Text.Encoding.UTF8, "application/json");
-            HttpResponseMessage response = await httpClient.SendAsync(request);
-            var responseContent = await response.Content.ReadAsStringAsync();
-            Console.WriteLine("Raw JSON response:" + responseContent);
-            ChatGptResponse chatGptResponse = JsonConvert.DeserializeObject<ChatGptResponse>(responseContent);
-
-            // Print the deserialized response for debugging purposes
-            Console.WriteLine("Deserialized response: " + JsonConvert.SerializeObject(chatGptResponse, Formatting.Indented));
-
-            if (chatGptResponse.choices != null && chatGptResponse.choices.Count > 0)
-            {
-                string responseText = chatGptResponse.choices[0].message.content;
-                return responseText;
-            }
-            else
-            {
-                Console.WriteLine("No choices found in the response.");
-                return null;
-            }
-        }
     }
 
     
