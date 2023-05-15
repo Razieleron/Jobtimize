@@ -16,30 +16,6 @@ namespace Jobtimize
         {public static List<GithubProject> githubProjects = new List<GithubProject>
         {
             new GithubProject {
-                ProjectKey = 1,
-                ProjectTitle = "Pig Dice", 
-                ProjectUrl = "https://github.com/Razieleron/pig-dice", 
-                ProjectDescription = "Two Player Dice Game", 
-                ProjectLanguages = "JavaScript, HTML, CSS"},
-            new GithubProject { 
-                ProjectKey = 2,
-                ProjectTitle = "Programming Quiz", 
-                ProjectUrl = "https://github.com/Razieleron/week-2-coding-review", 
-                ProjectDescription = "This is a simple choice tree exercise using the medium of a 'Quiz'. Asking the user for inputs will return a value that, depending on the choices made, will return the 'best' programming language for that user to learn.", 
-                ProjectLanguages = "Event Handlers/Listeners, Event Objects, Function Expressions, Accessing HTML Element Attributes and Properties in the DOM, Forms, Branching, and Locally/Functionally Scoped Variables"},
-            new GithubProject {
-                ProjectKey = 3, 
-                ProjectTitle = "Mister Roboger's Neighborhood", 
-                ProjectUrl = "https://github.com/Razieleron/week-3-coding-review", 
-                ProjectDescription = "An exercise in arrays, branching, and loops in string manipulation.", 
-                ProjectLanguages = "JavaScript, HTML, CSS, Test Driven Development"},
-            new GithubProject {
-                ProjectKey = 4, 
-                ProjectTitle = "Super Galactic Age Calculator", 
-                ProjectUrl = "https://github.com/Razieleron/super-galactic-age-calculator", 
-                ProjectDescription = "This Application Calculates your age in various solar years - (Earth, Mercury, Venus, Mars, Jupiter).", 
-                ProjectLanguages = "JavaScript, HTML, CSS"},
-            new GithubProject {
                 ProjectKey = 5, 
                 ProjectTitle = "Gif Machine", 
                 ProjectUrl = "https://github.com/Razieleron/gif-machine", 
@@ -77,7 +53,7 @@ namespace Jobtimize
                 ProjectLanguages = "C#, HTML, EF Core, .Net, SQL, AspNetCore, MVC"},
             new GithubProject {
                 ProjectKey = 11, 
-                ProjectTitle = "Pierre's Sweet and Savory Treats", 
+                ProjectTitle = "Pierre's Bakery", 
                 ProjectUrl = "https://github.com/Razieleron/PierresSweetAndSavoryTreats", 
                 ProjectDescription = "An application with user authentication and a many-to-many database relationship written in C#, using EF Core and mySQL", 
                 ProjectLanguages = "C#, Entity Framework, SQL, AspNetCore MVC, HTML, CSS"},
@@ -92,7 +68,7 @@ namespace Jobtimize
                 ProjectTitle = "Animal Shelter API", 
                 ProjectUrl = "https://github.com/Razieleron/AnimalShelterApi", 
                 ProjectDescription = "A functional API connected to an EF core database.  Has versioning functionality and authentication tokens required for access to the api.", 
-                ProjectLanguages = "C#, .Net, EF Core, SQL, Postman,  "},
+                ProjectLanguages = "C#, .Net, EF Core, SQL, Postman"},
             new GithubProject {
                 ProjectKey = 14, 
                 ProjectTitle = "DiLPr", 
@@ -104,7 +80,7 @@ namespace Jobtimize
                 ProjectTitle = "Word Guess Time!", 
                 ProjectUrl = "https://github.com/Razieleron/react-word-game", 
                 ProjectDescription = "A multiplayer hangman style guessing game that utilizes an api to call random words.", 
-                ProjectLanguages = "React, JavaScript, HTML, CSS, "},
+                ProjectLanguages = "React, JavaScript, HTML, CSS"},
             new GithubProject {
                 ProjectKey = 16, 
                 ProjectTitle = "RecipeBox", 
@@ -145,12 +121,14 @@ namespace Jobtimize
                 {
                     numberOfSkills += 1;
                 }
-                if (numberOfSkills >=7 && item.Seniority_level.Contains("Entry", StringComparison.OrdinalIgnoreCase))
+                if (numberOfSkills >=5 
+                // && item.Seniority_level.Contains("Entry", StringComparison.OrdinalIgnoreCase)
+                )
                 {
                     HttpClient httpClient = new HttpClient();
                     
                         //distills the job description
-                    string distilledJobDescription = await GetGptResponseByDictAsync(httpClient, ApiInformation.JobDescriptionDistillationRequestBodyDict);
+                    // string distilledJobDescription = await GetGptResponseByDictAsync(httpClient, ////ApiInformation.JobDescriptionDistillationRequestBodyDict);
                     
                         //this appends the cover letter prompt with the job description from the json file
                     ApiInformation.CoverLetterRequestBodyDict["prompt"] = 
@@ -176,26 +154,40 @@ namespace Jobtimize
                     string githubProjectOrderResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.GithubProjectRequestBodyDict);
                     Console.WriteLine("githubProjectOrderResponseText = " + githubProjectOrderResponseText);
 
+                    string [] projectsList = githubProjectOrderResponseText.Replace(" ", "").Split(',');
+                    int firstNumber = int.Parse(projectsList[0]);
+                    int secondNumber = int.Parse(projectsList[1]);
+                    int thirdNumber = int.Parse(projectsList[2]);
+                    int fourthNumber = int.Parse(projectsList[3]);
+                    Console.WriteLine("first number = " + firstNumber + "       second number = " + secondNumber + "       third number = " + thirdNumber + "       fourth number = " + fourthNumber);
 
-
-
-
-
-
-
-
-
-
-
-
-
+                    GithubProject firstProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == firstNumber);
+                    GithubProject secondProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == secondNumber);
+                    GithubProject thirdProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == thirdNumber);
+                    GithubProject fourthProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == fourthNumber);
 
 
                     Dictionary<string, string> replacements = new Dictionary<string, string>
                     {
-                        { "Proj1Name", "John" },
-                        { "Proj1Url", "Doe" },
-                        { "Proj1Description", "john.doe@example.com" },
+                        { "Proj1Name", $"{firstProjectInList.ProjectTitle}" },
+                        { "Proj1Url", $"{firstProjectInList.ProjectUrl}" },
+                        { "Proj1Description", $"{firstProjectInList.ProjectDescription}" },
+                        { "Proj1Languages", $"{firstProjectInList.ProjectLanguages}" },
+
+                        { "Proj2Name", $"{secondProjectInList.ProjectTitle}" },
+                        { "Proj2Url", $"{secondProjectInList.ProjectUrl}" },
+                        { "Proj2Description", $"{secondProjectInList.ProjectDescription}" },
+                        { "Proj2Languages", $"{secondProjectInList.ProjectLanguages}" },
+
+                        { "Proj3Name", $"{thirdProjectInList.ProjectTitle}" },
+                        { "Proj3Url", $"{thirdProjectInList.ProjectUrl}" },
+                        { "Proj3Description", $"{thirdProjectInList.ProjectDescription}" },
+                        { "Proj3Languages", $"{thirdProjectInList.ProjectLanguages}" },
+
+                        { "Proj4Name", $"{fourthProjectInList.ProjectTitle}" },
+                        { "Proj4Url", $"{fourthProjectInList.ProjectUrl}" },
+                        { "Proj4Description", $"{fourthProjectInList.ProjectDescription}" },
+                        { "Proj4Languages", $"{fourthProjectInList.ProjectLanguages}" },
                     };
 
 
