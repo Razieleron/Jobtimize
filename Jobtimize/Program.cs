@@ -91,7 +91,7 @@ namespace Jobtimize
                 ProjectKey = 18, 
                 ProjectTitle = "Jobtimize", 
                 ProjectUrl = "https://github.com/Razieleron/Jobtimize", 
-                ProjectDescription = "Resume and Cover letter automation program that takes scraped data and makes multiple api calls to chatGPT with engineered prompts to appropriately populate both the cover letter and resume", 
+                ProjectDescription = "Resume and Cover letter automation program that takes scraped data and makes multiple api calls to chatGPT with engineered prompts to appropriately populate both the cover letter and resume.", 
                 ProjectLanguages = "ChatGPT, APIs, C#, Packages: OpenXML, Newtonsoft.Json, CsvHelper"}
         };
         static async Task Main(string[] args)
