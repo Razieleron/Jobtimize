@@ -3,66 +3,60 @@ using Newtonsoft.Json;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Wordprocessing;
 using Jobtimize.Models;
-using System;
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
-using System.Linq;
-
 
 namespace Jobtimize
 {
     class Program 
         {public static List<GithubProject> githubProjects = new List<GithubProject>
         {
-            new GithubProject {
-                ProjectKey = 5, 
-                ProjectTitle = "Gif Machine", 
-                ProjectUrl = "https://github.com/Razieleron/gif-machine", 
-                ProjectDescription = "A website that makes Api calls to an endpoint based on a user's input and then updates the dom with the returned image.", 
-                ProjectLanguages = "JavaScript, HTML, CSS, Babel, Eslint"},
+            // new GithubProject {
+            //     ProjectKey = 5, 
+            //     ProjectTitle = "Gif Machine", 
+            //     ProjectUrl = "https://github.com/Razieleron/gif-machine", 
+            //     ProjectDescription = "A website that makes Api calls to an endpoint based on a user's input and then updates the dom with the returned image.", 
+            //     ProjectLanguages = "JavaScript, HTML, CSS, Babel, Eslint"},
             new GithubProject {
                 ProjectKey = 6, 
                 ProjectTitle = "The Event Handlers", 
                 ProjectUrl = "https://github.com/Razieleron/the-event-handlers", 
                 ProjectDescription = "Utilized JavaScript to Create a Side-Scrolling Shoot-em-up through calling methods on the canvas.  Sourced  all assets from free sources and built the game with Plain HTML/CSS.", 
                 ProjectLanguages = "JavaScript, HTML, CSS, Markdown, Node.js, Canvas Methods"},
-            new GithubProject {
-                ProjectKey = 7, 
-                ProjectTitle = "Currency Exchange", 
-                ProjectUrl = "https://github.com/Razieleron/currency-exchange", 
-                ProjectDescription = "An application that converts UDS to other currencies by making an API call in a javascript environment.", 
-                ProjectLanguages = "JavaScript, HTML, CSS"},
-            new GithubProject {
-                ProjectKey = 8, 
-                ProjectTitle = "MadLib in C#", 
-                ProjectUrl = "https://github.com/Razieleron/MadLib-C-Sharp", 
-                ProjectDescription = "A multi page madlib site programmed in C# using the .Net6.0 framework and Model View Controllers and AspNetCore.", 
-                ProjectLanguages = "C#, CSHTML, .Net, MVC, AspNetCore"},
+            // new GithubProject {
+            //     ProjectKey = 7, 
+            //     ProjectTitle = "Currency Exchange", 
+            //     ProjectUrl = "https://github.com/Razieleron/currency-exchange", 
+            //     ProjectDescription = "An application that converts UDS to other currencies by making an API call in a javascript environment.", 
+            //     ProjectLanguages = "JavaScript, HTML, CSS"},
+            // new GithubProject {
+            //     ProjectKey = 8, 
+            //     ProjectTitle = "MadLib in C#", 
+            //     ProjectUrl = "https://github.com/Razieleron/MadLib-C-Sharp", 
+            //     ProjectDescription = "A multi page madlib site programmed in C# using the .Net6.0 framework and Model View Controllers and AspNetCore.", 
+            //     ProjectLanguages = "C#, CSHTML, .Net, MVC, AspNetCore"},
             new GithubProject {
                 ProjectKey = 9, 
-                ProjectTitle = "Vendor and Order Tracker", 
+                ProjectTitle = "Vendor/Order Tracker", 
                 ProjectUrl = "https://github.com/Razieleron/Vendor-and-Order-Tracker", 
                 ProjectDescription = "A web application that allows a user to create vendors and the orders that those vendors place.", 
                 ProjectLanguages = "C#, HTML, CSS, TDD, .Net, MVC, AspNetCore"},
-            new GithubProject {
-                ProjectKey = 10, 
-                ProjectTitle = "Eau Claire's Salon", 
-                ProjectUrl = "https://github.com/Razieleron/Eau-Claire-s-Salon", 
-                ProjectDescription = "A Personnel and Client Management Web Application with a persistent database in C#, using EF core and SQL", 
-                ProjectLanguages = "C#, HTML, EF Core, .Net, SQL, AspNetCore, MVC"},
+            // new GithubProject {
+            //     ProjectKey = 10, 
+            //     ProjectTitle = "Hair Salon", 
+            //     ProjectUrl = "https://github.com/Razieleron/Eau-Claire-s-Salon", 
+            //     ProjectDescription = "A Personnel and Client Management Web Application with a persistent database in C#, using EF core and SQL", 
+            //     ProjectLanguages = "C#, HTML, EF Core, .Net, SQL, AspNetCore, MVC"},
             new GithubProject {
                 ProjectKey = 11, 
                 ProjectTitle = "Pierre's Bakery", 
                 ProjectUrl = "https://github.com/Razieleron/PierresSweetAndSavoryTreats", 
                 ProjectDescription = "An application with user authentication and a many-to-many database relationship written in C#, using EF Core and mySQL", 
                 ProjectLanguages = "C#, Entity Framework, SQL, AspNetCore MVC, HTML, CSS"},
-            new GithubProject {
-                ProjectKey = 12, 
-                ProjectTitle = "Dr Sillystrings' Factory", 
-                ProjectUrl = "https://github.com/Razieleron/Dr.-Sillystringz-s-Factory", 
-                ProjectDescription = "This is a Many-to-Many relationship management Web Application that allows user to create Engineers and Machines and also give Engineers license to work on certain machines ", 
-                ProjectLanguages = "C#, Entity Framework, SQL, AspNetCore MVC, HTML, CSS"},
+            // new GithubProject {
+            //     ProjectKey = 12, 
+            //     ProjectTitle = "Engineer's Factory", 
+            //     ProjectUrl = "https://github.com/Razieleron/Dr.-Sillystringz-s-Factory", 
+            //     ProjectDescription = "This is a Many-to-Many relationship management Web Application that allows user to create Engineers and Machines and give Engineers license to work on certain machines ", 
+            //     ProjectLanguages = "C#, Entity Framework, SQL, AspNetCore MVC, HTML, CSS"},
             new GithubProject {
                 ProjectKey = 13, 
                 ProjectTitle = "Animal Shelter API", 
@@ -77,7 +71,7 @@ namespace Jobtimize
                 ProjectLanguages = "EF core, CSS, SQL, MVC, .Net, C#, HTML"},
             new GithubProject {
                 ProjectKey = 15, 
-                ProjectTitle = "Word Guess Time!", 
+                ProjectTitle = "WordGuess!", 
                 ProjectUrl = "https://github.com/Razieleron/react-word-game", 
                 ProjectDescription = "A multiplayer hangman style guessing game that utilizes an api to call random words.", 
                 ProjectLanguages = "React, JavaScript, HTML, CSS"},
@@ -85,7 +79,7 @@ namespace Jobtimize
                 ProjectKey = 16, 
                 ProjectTitle = "RecipeBox", 
                 ProjectUrl = "https://github.com/Razieleron/RecipeBox", 
-                ProjectDescription = "A thoroughly styled and built out application to track recipes and their components for a fictional hobby website.", 
+                ProjectDescription = "A styled and built out application to track recipes and their components for a fictional hobby website.", 
                 ProjectLanguages = "C#, .Net, AspNetCore MVC, SQL, HTML, CSS"},
             new GithubProject {
                 ProjectKey = 17, 
@@ -122,15 +116,11 @@ namespace Jobtimize
                     numberOfSkills += 1;
                 }
                 if (numberOfSkills >=5 
-                // && item.Seniority_level.Contains("Entry", StringComparison.OrdinalIgnoreCase)
+
                 )
                 {
                     HttpClient httpClient = new HttpClient();
                     
-                        //distills the job description
-                    // string distilledJobDescription = await GetGptResponseByDictAsync(httpClient, ////ApiInformation.JobDescriptionDistillationRequestBodyDict);
-                    
-                        //this appends the cover letter prompt with the job description from the json file
                     ApiInformation.CoverLetterRequestBodyDict["prompt"] = 
                             ApiInformation.CoverLetterRequestBodyDict["prompt"] += 
                             $"{item.Job_description}" + 
@@ -158,14 +148,13 @@ namespace Jobtimize
                     int firstNumber = int.Parse(projectsList[0]);
                     int secondNumber = int.Parse(projectsList[1]);
                     int thirdNumber = int.Parse(projectsList[2]);
-                    int fourthNumber = int.Parse(projectsList[3]);
-                    Console.WriteLine("first number = " + firstNumber + "       second number = " + secondNumber + "       third number = " + thirdNumber + "       fourth number = " + fourthNumber);
+                    // int fourthNumber = int.Parse(projectsList[3]);
+                    string resumeJobTitle = (string)item.Job_title;
 
                     GithubProject firstProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == firstNumber);
                     GithubProject secondProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == secondNumber);
                     GithubProject thirdProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == thirdNumber);
-                    GithubProject fourthProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == fourthNumber);
-
+                    // GithubProject fourthProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == fourthNumber);
 
                     Dictionary<string, string> replacements = new Dictionary<string, string>
                     {
@@ -184,18 +173,16 @@ namespace Jobtimize
                         { "Proj3Description", $"{thirdProjectInList.ProjectDescription}" },
                         { "Proj3Languages", $"{thirdProjectInList.ProjectLanguages}" },
 
-                        { "Proj4Name", $"{fourthProjectInList.ProjectTitle}" },
-                        { "Proj4Url", $"{fourthProjectInList.ProjectUrl}" },
-                        { "Proj4Description", $"{fourthProjectInList.ProjectDescription}" },
-                        { "Proj4Languages", $"{fourthProjectInList.ProjectLanguages}" },
+                        { "JobTitle", $"{resumeJobTitle}"}
+
+                        // { "Proj4Name", $"{fourthProjectInList.ProjectTitle}" },
+                        // { "Proj4Url", $"{fourthProjectInList.ProjectUrl}" },
+                        // { "Proj4Description", $"{fourthProjectInList.ProjectDescription}" },
+                        // { "Proj4Languages", $"{fourthProjectInList.ProjectLanguages}" },
                     };
 
 
                     string inputFilePath = "./../Jobtimize/ScrapedData/templatedResume.docx";
-                    // string proj1Table = "Proj1Name";
-                    // string proj1Url = "Proj1Url";
-                    // string proj1Description = "Proj1Description";
-                    // string proj1Languages = "Proj1Languages";
 
                     string resumeFilePath = AssembleFolderPathString(item) + "\\" + CreateResumeName(item) + ".docx";
                     string coverLetterFilePath = AssembleFolderPathString(item) + "\\" + CreateCoverLetterName(item) + ".docx";
