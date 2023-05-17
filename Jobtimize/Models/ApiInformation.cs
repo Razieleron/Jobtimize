@@ -64,7 +64,7 @@ namespace Jobtimize.Models
         public static Dictionary<string, object> CoverLetterRequestBodyDict = new Dictionary<string, object>
                     {
                         { "prompt", CoverLetterPrompt },
-                        { "max_tokens", 2000 },
+                        { "max_tokens", 50 },
                         { "model", ModelName },
                         { "temperature", 0.5 },
                         { "top_p", 1 },
@@ -76,7 +76,7 @@ namespace Jobtimize.Models
         public static Dictionary<string, object> JobDescriptionDistillationRequestBodyDict = new Dictionary<string, object>  
                     {
                         {"prompt", JobDescriptionDistillationPrompt}, 
-                        {"max_tokens", 2000 },
+                        {"max_tokens", 50 },
                         {"model", ModelName },
                         {"temperature", 0.5},
                         {"top_p", 1},
@@ -88,7 +88,7 @@ namespace Jobtimize.Models
         public static Dictionary<string, object> GithubProjectRequestBodyDict = new Dictionary<string, object>  
                     {
                         {"prompt", GithubProjectOrderPrompt}, 
-                        {"max_tokens", 50 },
+                        {"max_tokens", 100 },
                         {"model", ModelName },
                         {"temperature", 0.5},
                         {"top_p", 1},

@@ -115,46 +115,38 @@ namespace Jobtimize
                 {
                     numberOfSkills += 1;
                 }
-                if (numberOfSkills >=5 
-
-                )
+                if (numberOfSkills >=5)
                 {
                     HttpClient httpClient = new HttpClient();
-                    
                     ApiInformation.CoverLetterRequestBodyDict["prompt"] = 
                             ApiInformation.CoverLetterRequestBodyDict["prompt"] += 
                             $"{item.Job_description}" + 
                             @"
                     
                             Please create a one-page cover letter focusing on the most relevant skills and talents from the list that match the requirements of the job description.";
-
-
-                        //this appends the github project prompt with the job description and the list of github objects
+                    
+                    //this appends the github project prompt with the job description and the list of github objects
                     ApiInformation.GithubProjectRequestBodyDict["prompt"] = $"Based on the following job description:  {item.Job_description}" + @$"
                     
                     
                     order this list of github projects in order from most relevant to the posting to the least relevant to the posting, referring to each item only by it's 'ProjectKey' field.  As an example, your return should look like this '1, 3, 15, 4, 6' with 1 being the most relevant and 6 the least relevant.  Be sure to balance choosing projects that show the ability to accomplish the needs of the job with choosing complex projects that demonstrate overall competence and acumen.  Here is the list of github Projects:  
                     
                     {serializedGithubProjects}";
-
-
-                        //this is the variable that contains the text from the chatGptAPI Call
+                    
+                    
+                    //this is the variable that contains the text from the chatGptAPI Call
                     string coverLetterResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.CoverLetterRequestBodyDict);
-
                     string githubProjectOrderResponseText = await GetGptResponseByDictAsync(httpClient, ApiInformation.GithubProjectRequestBodyDict);
-                    Console.WriteLine("githubProjectOrderResponseText = " + githubProjectOrderResponseText);
+
 
                     string [] projectsList = githubProjectOrderResponseText.Replace(" ", "").Split(',');
                     int firstNumber = int.Parse(projectsList[0]);
                     int secondNumber = int.Parse(projectsList[1]);
                     int thirdNumber = int.Parse(projectsList[2]);
-                    // int fourthNumber = int.Parse(projectsList[3]);
-                    string resumeJobTitle = (string)item.Job_title;
 
                     GithubProject firstProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == firstNumber);
                     GithubProject secondProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == secondNumber);
                     GithubProject thirdProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == thirdNumber);
-                    // GithubProject fourthProjectInList = githubProjects.FirstOrDefault(p => p.ProjectKey == fourthNumber);
 
                     Dictionary<string, string> replacements = new Dictionary<string, string>
                     {
@@ -172,20 +164,16 @@ namespace Jobtimize
                         { "Proj3Url", $"{thirdProjectInList.ProjectUrl}" },
                         { "Proj3Description", $"{thirdProjectInList.ProjectDescription}" },
                         { "Proj3Languages", $"{thirdProjectInList.ProjectLanguages}" },
-
-                        { "JobTitle", $"{resumeJobTitle}"}
-
-                        // { "Proj4Name", $"{fourthProjectInList.ProjectTitle}" },
-                        // { "Proj4Url", $"{fourthProjectInList.ProjectUrl}" },
-                        // { "Proj4Description", $"{fourthProjectInList.ProjectDescription}" },
-                        // { "Proj4Languages", $"{fourthProjectInList.ProjectLanguages}" },
                     };
 
+                    Console.WriteLine("githubProjectOrderResponseText = " + githubProjectOrderResponseText);
 
                     string inputFilePath = "./../Jobtimize/ScrapedData/templatedResume.docx";
+                    string jobDetailsText = $"Company: {item.Company}\r\nLocation: {item.Location}\r\nJob Title: {item.Job_title}\r\nLink to posting: {item.Job_link}\r\nJob Seniority Level (not always accurate): {item.Seniority_level}\r\nJob Description :\r\n{item.Job_description}";
 
-                    string resumeFilePath = AssembleFolderPathString(item) + "\\" + CreateResumeName(item) + ".docx";
-                    string coverLetterFilePath = AssembleFolderPathString(item) + "\\" + CreateCoverLetterName(item) + ".docx";
+                    string resumeFilePath = AssembleFolderPathString(item) + "\\" + CreateResumeName(item);
+                    string coverLetterFilePath = AssembleFolderPathString(item) + "\\" + CreateCoverLetterName(item);
+                    string jobDetailsFilePath = AssembleFolderPathString(item) + "\\" + CreateJobDetailsName(item);
 
                     CreateDirectory(AssembleFolderPathString(item));
 
@@ -193,11 +181,11 @@ namespace Jobtimize
                     ReplaceTextInWordDocument(resumeFilePath, replacements);
 
                     CreateWordDocument(coverLetterFilePath, coverLetterResponseText);
+                    CreateWordDocument(jobDetailsFilePath, jobDetailsText);
+                    
                     WriteJobInformationToTheConsole(item);
-
                     Thread.Sleep(3000);
                     Console.WriteLine(); 
-                    // Add an empty line for better readability 
                 }
                 
             }
@@ -207,13 +195,17 @@ namespace Jobtimize
     {
     return $"CreatedFiles/{item.Company} - {item.Location} - {item.Job_title}";
     }
+    private static string CreateJobDetailsName(JobItem item)
+    {
+        return $"Job Details for - {item.Company} - {item.Location} - {item.Job_title}.docx";
+    }
     private static string CreateResumeName(JobItem item)
     {
-        return $"Resume - {item.Company} - {item.Location} - {item.Job_title}";
+        return $"Resume - {item.Company} - {item.Location} - {item.Job_title}.docx";
     }
     private static string CreateCoverLetterName(JobItem item)
     {
-        return $"Cover Letter - {item.Company} - {item.Location} - {item.Job_title}";
+        return $"Cover Letter - {item.Company} - {item.Location} - {item.Job_title}.docx";
     }
     private static void CreateDirectory(string directoryPath)
     {
@@ -231,16 +223,23 @@ namespace Jobtimize
             MainDocumentPart mainPart = doc.AddMainDocumentPart();
             mainPart.Document = new Document();
 
-            // Create a new body and add content.
+            // Create a new body.
             Body body = new Body();
-            Paragraph paragraph = new Paragraph();
-            Run run = new Run();
-            Text text = new Text(bodyText);
 
-            // Assemble the document structure.
-            run.Append(text);
-            paragraph.Append(run);
-            body.Append(paragraph);
+            // Split the text into paragraphs on newline characters.
+            string[] paragraphs = bodyText.Split('\n');
+            foreach (string para in paragraphs)
+                {
+                // Create a new paragraph for each line of text.
+                Paragraph paragraph = new Paragraph();            
+                Run run = new Run();
+                Text text = new Text(para);
+            
+                // Assemble the document structure.
+                run.Append(text);
+                paragraph.Append(run);
+                body.Append(paragraph);
+                }
 
             // Add the body to the document.
             mainPart.Document.Append(body);
@@ -304,8 +303,6 @@ namespace Jobtimize
         return responseText;
     }
 
-    
     }
-
 }
 

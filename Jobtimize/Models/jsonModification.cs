@@ -177,7 +177,7 @@
 //             item.Industries = item.Industries.Replace("@", "");
 
 
-//             // item.Job_description = item.Job_description.Replace("\n", "");
+//             item.Job_description = item.Job_description.Replace("\n", "");
 //             item.Job_description = item.Job_description.Replace("  ", "");
 //             // item.Job_description = item.Job_description.Replace(":", "");
 //             // item.Job_description = item.Job_description.Replace(",", "");
