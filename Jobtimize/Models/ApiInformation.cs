@@ -64,7 +64,7 @@ namespace Jobtimize.Models
         public static Dictionary<string, object> CoverLetterRequestBodyDict = new Dictionary<string, object>
                     {
                         { "prompt", CoverLetterPrompt },
-                        { "max_tokens", 50 },
+                        { "max_tokens", 1000 },
                         { "model", ModelName },
                         { "temperature", 0.5 },
                         { "top_p", 1 },

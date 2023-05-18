@@ -103,7 +103,7 @@ namespace Jobtimize
         string serializedGithubProjects = JsonConvert.SerializeObject(githubProjects);
 
         foreach (JobItem item in JobItemParameters.JobItems)
-        {     
+        {   
             int numberOfSkills = 0;
             ApiInformation.CoverLetterRequestBodyDict["prompt"] = initialCoverLetterPrompt;
             ApiInformation.JobDescriptionDistillationRequestBodyDict["prompt"] = initialJobDescriptionDistillationPrompt;
@@ -184,7 +184,7 @@ namespace Jobtimize
                     CreateWordDocument(jobDetailsFilePath, jobDetailsText);
                     
                     WriteJobInformationToTheConsole(item);
-                    Thread.Sleep(3000);
+                    Thread.Sleep(5000);
                     Console.WriteLine(); 
                 }
                 
